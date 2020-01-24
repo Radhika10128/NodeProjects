@@ -13,7 +13,7 @@ class Navbar extends Component {
               <img src={logo1} alt="pic" width="120px" height="50px"></img>
             </div>
             <div className="nav navbar-right">
-              <Link to="signup" className="btn btn-default">
+              <Link to="signup" className="btn btn-dark">
                 SignUp
               </Link>
               <Link to="login" className="btn btn-primary">

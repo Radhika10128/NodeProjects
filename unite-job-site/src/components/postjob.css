@@ -1,51 +1,52 @@
-.main
-{
+.main {
     width: 100%;
 }
-.main img 
-{
-    width:100%;
-    height:500px;
+
+.main img {
+    width: 100%;
+    height: 500px;
 }
-.post
-{
+
+.post {
     background-color: cornflowerblue;
 }
-.main button{
+
+.main button {
     border-radius: 10px;
 }
-.main p{
+
+.main p {
     font-size: 50px;
     color: rgb(12, 70, 94);
 }
+
 .background {
     height: 400px;
-    background: url(https://cdn.nohat.cc/thumb/f/720/5750455946706944.jpg) ;
+    background: url(https://creativedesign.rs/images/products/we-are-hiring-background.jpg);
     border: 1px solid black;
-    background-repeat:no-repeat;
-    background-size:cover ;
-  }
-   
-  .transbox {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.transbox {
     margin: 50px;
     background-color: rgb(150, 148, 148);
     border: 1px solid black;
     opacity: 0.6;
-    filter: alpha(opacity=60); 
-  }
-   
-  .transbox p {
+    filter: alpha(opacity=60);
+}
+
+.transbox p {
     margin: 2%;
     font-weight: bold;
     color: #000000;
-  }
+}
 
-  .d1
-  {
-  background-color: white;
-  background-image: url(https://wallpaperplay.com/walls/full/9/4/2/63340.jpg);
-  }
-  .d1 button{
-      border-radius: 10px;
-  }
-  
+.d1 {
+    background-color: white;
+    background-image: url(https://wallpaperplay.com/walls/full/9/4/2/63340.jpg);
+}
+
+.d1 button {
+    border-radius: 10px;
+}

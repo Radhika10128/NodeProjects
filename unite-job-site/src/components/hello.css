@@ -1,3 +1,7 @@
 .img-container{
     float: left;
 }
+
+.suggested{
+    background-image: url("https://cdn5.vectorstock.com/i/1000x1000/10/49/recruit-hand-hold-magnifying-glass-choosing-vector-20631049.jpg");
+}

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import logo1 from '.././logo1.png';
 import './postjob.css';
+import Navbar1 from './navbar1';
 
 class Postjob extends Component{
 
@@ -11,14 +11,14 @@ class Postjob extends Component{
     this.title = "";
     this.type = "";
     this.location = "";
-    this.skills = "";
+    this.description = "";
     this.state = {
         usersadd: {
             name: '',
             title: '',
             type: '',
             location: '',
-            skills: ''
+            description: ''
         }
     }
     console.log("Component: Add book component ", "Method: constructor ", `props: ${JSON.stringify(this.props)}`);
@@ -36,23 +36,14 @@ class Postjob extends Component{
     this.setState({postsadd: { ...this.state.postsadd, location: event.target.value }});
   };
 
-  handleskillsChange = event => {
-    this.setState({postsadd: { ...this.state.postsadd, skills: event.target.value }});
+  handledescriptionChange = event => {
+    this.setState({postsadd: { ...this.state.postsadd, description: event.target.value }});
   };
 
  render(){
      return (
        <div>
-        <nav className="navbar navbar-inverse navbar-light bg-light">
-  <div className="container-fluid">
-    <div className="navbar-header">
-      <img src={logo1} alt="pic" width="120px" height="50px"></img>
-    </div>
-    <div className="nav navbar-right">
-    <i>Post a Job</i>
-    </div>
-  </div>
-</nav>
+      <Navbar1/>
 
 <hr/>
 
@@ -86,7 +77,7 @@ class Postjob extends Component{
                         <option>Part Time</option>
                       </select><br/><br/>
         <input type="text" class="form-control" id="inputPassword" placeholder="Location" value={this.state.location} onChange={this.handlelocationChange}/><br/><br/>
-        <textarea cols="30" rows="8" placeholder="Skills" value={this.state.skills} onChange={this.handleskillsChange}></textarea><br/><br/>
+        <textarea cols="30" rows="8" placeholder="Description" value={this.state.description} onChange={this.handledescriptionChange}></textarea><br/><br/>
     <button type="submit" class="btn btn-primary">Post</button>
     </form>
 </center>

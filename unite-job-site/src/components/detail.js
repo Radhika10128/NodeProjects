@@ -4,7 +4,7 @@ const Detail = ({Company,Location, title, type,how}) => {
     return (
         <center>
         <div className="Main"> 
-<div className="card text-center " style={{height:250}}>
+<div className="card text-center " style={{height:380}}>
   <div className="card-header">
    <b>Company Name: </b> <h2>{Company}</h2>
   </div>

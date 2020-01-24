@@ -7,87 +7,30 @@ class Navbar1 extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
-          <a class="navbar-brand" href="#">
-            <img src={logo1} alt="pic" width="120px" height="50px"></img>
-          </a>
-
-          <form class="form-inline" action="/action_page.php">
-            <div id="SearchBar">
-              {" "}
-              <input
-                class="form-control mr-sm-2"
-                type="text"
-                placeholder="Search"
-                width="200px"
-              />
-              <button class="btn btn-success" type="submit">
-                Search
-              </button>
-            </div>
-          </form>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span>
-                  {" "}
-                  <span class="glyphicon glyphicon-home">Home</span>
-                </span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span>
-                  {" "}
-                  <span class="glyphicon glyphicon-user">Network</span>
-                </span>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a>
-                <Link to="SearchJobs">
-                  <span>
-                    {" "}
-                    <span class="glyphicon glyphicon-briefcase">Find Jobs</span>
-                  </span>
-                </Link>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span>
-                  {" "}
-                  <span class="glyphicon glyphicon-comment">Messages</span>
-                </span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span> | </span>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span>
-                  {" "}
-                  <span class="glyphicon glyphicon-bookmark">BookMarks</span>
-                </span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span>
-                  {" "}
-                  <span class="glyphicon glyphicon-question-sign">
-                    NOtification
-                  </span>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+       <div className="row">
+              <div className="col">
+                  <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                  <div className="navbar-brand ml-12 pl-14">
+                  <img src={logo1} alt="pic" width="80px" height="40px"></img>
+                      </div>
+                      <div className="navbar-nav">
+                      <a><Link to='search'>Home</Link></a>
+                      </div>
+                      <div className="navbar-nav">
+                      <a><Link to='postjob'>Post Job</Link></a>
+                      </div>
+                      <div className="navbar-nav">
+                      <a>Profile</a>
+                      </div>
+                      <div className="navbar-nav">
+                      <a><Link to='message'>Message</Link></a>
+                      </div>
+                      <div className="navbar-nav">
+                      <a><Link to='jobs'>Jobs</Link></a>
+                      </div>
+                  </nav>
+              </div>
+          </div >
       </React.Fragment>
     );
   }

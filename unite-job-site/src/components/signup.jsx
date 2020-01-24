@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Redirect } from "react-router-dom";
 import "./login.css";
+import {Link} from 'react-router-dom';
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -99,6 +100,8 @@ class SignUp extends Component {
                     </button>
                   </div>
                 </form>
+                <br /><br />
+                                    <p>Already Registered? <Link to='login' style={{ color: 'blue' }}>Login</Link></p>
                 </center>
               </div>
             </div>
@@ -123,13 +126,20 @@ class SignUp extends Component {
         })
             .then(res => {
                 if (res.ok) {
+                  console.log("i am inside res.ok")
+                  // console.log(res.json());
                     return res.json();
                 }
             })
             .then(res => {
-                alert(`New User: ${JSON.stringify(res)} added successfully`);
+              console.log(res);
+                // alert(`New User: ${JSON.stringify(res)} added successfully`);
+
+                //kindly check if msg is user already exist
+                if(res.msg == "User added successfully")
                 this.setState({redirectToResume: true})
-               
+               else
+                alert("User name already exists!!!");
                 // this.props.history.push("/home");
             })
     })

@@ -15,3 +15,6 @@ code {
 .card-height {
   height: 200px !important
 }
+.main{
+  background-color: linear-gradient(to bottom, #ccffff 0%, #99ccff 100%);
+}

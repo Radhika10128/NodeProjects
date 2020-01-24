@@ -5,16 +5,17 @@ const jobSchema = new mongoose.Schema({
     title: String,
     type: String,
     location: String,
-    skills: String
+    description: String
 })
 
 const JobModel = mongoose.model("Job", jobSchema,"jobs");
 
 JobModel.findJob = function (req, callBack) {
-    let id = req.query.id;
+    let id = req.query.location;
+    let skill = req.query.description;
     let query = {};
     if (id) {
-        query = { _id: id }
+        query = { location : id , description: skill}
     }
     JobModel.find(query, callBack);
 }
