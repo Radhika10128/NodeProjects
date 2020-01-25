@@ -1,48 +1,43 @@
-    import React,{Component} from 'react';
-    import 'bootstrap/dist/css/bootstrap.css';
-    import './addBook.css';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
+import './../index.css';
 
-    class AddBook extends Component{
-        state = {
-            name: '',
-            author: '',
-            version: ''
+class AddBook extends Component {
+    constructor(props) {
+        super(props);
+        this.name = "";
+        this.author = "";
+        this.version = "";
+        this.state = {
+            book: {
+                name: '',
+                author: '',
+                version: '',
+            },
+            redirectToHome: false
         }
-        constructor() {
-            super();
-            this.name = "";
-            this.author = "";
-            this.version = "";
-        }
-        addBook = (event) => {
-            event.preventDefault();
-            this.name = this.refs.name.value;
-            /* Here since the setState ie triggered by reactJS event handler onSubmit and not the default one,
-            so the setState is Asynchronous */
-            this.setState({ name: this.name })
-            setTimeout(() => {
-                this.props.addBook(this.state);
-            })
-        }
+        console.log("Component: Add book component ", "Method: constructor ", `props: ${JSON.stringify(this.props)}`);
+    }
+
     handleAuthorChange = (event) => {
-        this.setState({ author: event.target.value })
+        this.setState({ book: { ...this.state.book, author: event.target.value } })
     }
 
     handleVersionChange = (event) => {
-        this.setState({ version: event.target.value })
+        this.setState({ book: { ...this.state.book, version: event.target.value } })
     }
+
+    handleImageChange = (event) => {
+        console.log(`The files are : ${event.target.files[0]}`)
+    }
+
     render() {
+        if (this.state.redirectToHome) {
+            return <Redirect to='/' />
+        }
+
         return (
-            <React.Fragment>
-            <div class="card">
-
-                    <h5 class="card-header header white-text text-center py-4">
-                        <strong>Add Book</strong>
-                    </h5><br/><br/>
-
-                
-                    <div class="card-body px-lg-5 pt-0 ">
-                    <div class="d-flex justify-content-center"></div>
+            <div className="container">
                 <form onSubmit={this.addBook}>
                     <div className="form-row">
                         <div className="form-group col-md-8">
@@ -65,9 +60,35 @@
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
-            </div>
-     </React.Fragment>
         )
     }
+
+    addBook = (event) => {
+        event.preventDefault();
+        this.name = this.refs.name.value;
+        /* Here since the setState ie triggered by reactJS event handler onSubmit and not the default one,
+        so the setState is Asynchronous */
+        this.setState({ book: { ...this.state.book, name: this.name } })
+        setTimeout(() => {
+            fetch('http://localhost:8080/books/addBook', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(this.state.book)
+            })
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(res => {
+                    alert(`New book: ${JSON.stringify(res)} added successfully`);
+                    this.setState({ redirectToHome: true });
+                    // this.props.history.push("/home");
+                })
+        })
     }
-    export default AddBook;
+}
+
+export default AddBook;

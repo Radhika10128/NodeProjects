@@ -2,31 +2,31 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
 import "./../index.css";
-import Navbar from './navbar';
 
 class RecentBooksList extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.componentName = "RecentBooksList"
     }
 
     componentDidMount() {
-        console.log(`${this.componentName}: Fetch list of Books`);
         this.props.fetchBooksList();
     }
 
     componentDidUpdate() {
-        console.log("recent Books Component is updated");
+        console.log("Recent Books List Component is updated");
+    }
+
+    componentWillUnmount() {
+        console.log("Recent Books List Component will unmount now");
     }
 
     render() {
         console.log(`Recent Books render method is called`);
         return (
-            <div>
-                <center>
-                <Navbar />
+            <div className="row component-margin">
+                <div className="col">
                     <table className="table table-bordered">
                         <thead>
                             <tr>
@@ -50,9 +50,8 @@ class RecentBooksList extends Component {
                             )}
                         </tbody>
                     </table>
-                    </center>
+                </div>
             </div>
-            
         )
     }
 

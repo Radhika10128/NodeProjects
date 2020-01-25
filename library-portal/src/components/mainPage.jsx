@@ -1,43 +1,50 @@
 import React, { Component } from 'react';
-import Title from './title';
+import Navbar from './navbar';
 import RecentBooksList from './recentBooksList'
 import EditBook from './editBook';
 import AddBook from './addBook';
+import NotFound from './notFound';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import "./../index.css";
-import Protected from './protected';
-import UnProtected from './unprotected';
 import Footer from './footer';
-import NotFound from './notFound';
+import Protected from './Protected';
+import UnProtected from './UnProtected';
+import SignUp from './SignUp';
+import Login from './Login';
+
 
 class MainPage extends Component {
     constructor() {
         super()
         console.log("Constructor is called");
         this.selectedPhoto = null;
+        this.state = {
+            bookList: [],
+            authenticated: false
+        }
+        this.name = "Chitkara University"
     }
 
     componentDidMount() {
         console.log("mainpage Component is mounted");
     }
 
-    state = {
-        bookList: [],
-        authenticated: false
-    }
-
     render() {
+        console.log("Mainpage Component is rendered");
+
         return (
             <div>
                 <Router>
-                    <div>
+                    <Navbar name={this.name} authenticated={this.state.authenticated} />
+                    <div className="col-md-8 offset-md-2">
                         <Switch>
-                        <Route exact path='/' render ={()=>(<Title/>)}/>
-                        <Route exact path="/homepage" render={(props) => <RecentBooksList bookList={this.state.bookList} sendSelectedBook={this.selectBook} deleteBook={this.deleteBook} fetchBooksList={this.fetchBooksList} />} />
-                        <Route path="/add" render={(props) => <AddBook  addBook={this.addBook} />} />
-                        <Route path="/edit" render={(props) => <EditBook book={this.state.selectedBookForEdit} editBook={this.editBook} />} />
-                        <Route path="/protected" render={(props) => this.state.authenticated ? <Protected /> : <Redirect to='/' />} />
-                        <Route render={(props) => <NotFound />} />
+                            <Route exact path="/home" render={(props) => <RecentBooksList bookList={this.state.bookList} sendSelectedBook={this.selectBook} deleteBook={this.deleteBook} fetchBooksList={this.fetchBooksList} />} />
+                            <Route path="/add" render={(props) => <AddBook {...props} test="test" />} />
+                            <Route path="/edit" render={(props) => <EditBook book={this.state.selectedBookForEdit} editBook={this.editBook} />} />
+                            <Route path="/protected" render={(props) => this.state.authenticated ? <Protected /> : <Redirect to='/' />} />
+                            <Route path="/signup" render={(props) => <SignUp />} />
+                            <Route path="/login" render={(props) => <Login />} />
+                            <Route render={(props) => <NotFound />} />
                         </Switch>
                     </div>
                     <Footer name={this.name} />
@@ -45,8 +52,9 @@ class MainPage extends Component {
             </div>
         )
     }
+
     fetchBooksList = () => {
-        fetch('http://localhost:8000/bookList')
+        fetch('http://localhost:8080/books')
             .then(res => {
                 return res.json()
             })
@@ -55,28 +63,15 @@ class MainPage extends Component {
                 this.setState({ bookList: res });
                 console.log(this.state.bookList)
             })
+            .catch(res => {
+                console.log(`The error is : ${JSON.stringify(res)}`)
+            })
     }
+
     selectBook = (book) => {
         this.setState({ selectedBookForEdit: book });
     }
-    addBook = (newBook) => {
-        console.log("The nely added book is: ", newBook)
-        fetch('http://localhost:8000/addBook', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newBook)
-        })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-            })
-            .then(res => {
-                alert(`New book: ${JSON.stringify(res)} added successfully`);
-            })
-    }
+
     editBook = (book) => {
         // let bookList = this.state.bookList.filter((book) => book.id != newBook.id);
         // bookList.push(newBook);
@@ -85,8 +80,9 @@ class MainPage extends Component {
         // setTimeout(() => {
         //     console.log("State in ASYNC call is: ", this.state.bookList);
         // }, 0)
+
         console.log('Updating book')
-        fetch(`http://localhost:8000/bookList/${book.id}`, {
+        fetch(`http://localhost:8080/books/updateBook`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -104,10 +100,12 @@ class MainPage extends Component {
                 console.error(`Error updating book: ${error}`)
             })
     }
+
     deleteBook = (book) => {
         console.log(`Book to be delete is: ${JSON.stringify(book)}`)
         console.log(this);
-        fetch(`http://localhost:8000/deleteBook/${book.id}`, {
+
+        fetch(`http://localhost:8080/books/deleteBook?id=${book._id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -124,5 +122,7 @@ class MainPage extends Component {
                 console.log(`The error is: ${error}`)
             })
     }
+
 }
+
 export default MainPage;

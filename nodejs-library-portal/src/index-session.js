@@ -1,29 +1,16 @@
 // All import statements
 const express = require("express");
 const bodyParser = require("body-parser");
+var path = require("path");
 require('./dbConnection');
-var users = require('./routes/users');
-var books = require('./routes/books');
-const UsersModel = require('./models/users');
-const session = require('express-session');
+const users = require('./routes/users');
+const books = require('./routes/books');
+const sesssion = require('express-session');
+
 
 // Functional code start here
 var app = express();
-var cookieValidator = (req, res, next) => {
-    if (req.session.userName) {
-        UsersModel.findUser(req, (err, res) => {
-            if (err) res.status(401).send("User not authenticated");
-            if (res && res.length == 0) {
-                res.status(401).send("User not authenticated");
-            }
-            if (res && res.length > 0) {
-                next();
-            }
-        })
-    } else {
-        res.status(401).send("User not authenticated");
-    }
-}
+app.use('/', express.static(path.join(__dirname, './../public/')));
 
 /* var id = 1;
 var books = [
@@ -36,14 +23,17 @@ var books = [
 ] */
 
 app.use(bodyParser.json());
-app.use(session({
-    key: "library",
-    secret: "librarysecret"
-}))
-app.use("/", express.static('static'))
-app.use("/home", express.static('static'))
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware
+app.use(sesssion({
+    key: "library",
+    secret: "library",
+    cookie: {
+        expires: 600000
+    }
+}))
+
+// Sample middleware
 app.use("*", (req, res, next) => {
     console.log("Middleware is called");
     res.setHeader('Access-Control-Allow-Origin', "*")
@@ -53,7 +43,7 @@ app.use("*", (req, res, next) => {
 })
 
 app.use('/users', users);
-app.use('/books', cookieValidator, books);
+app.use('/books', books);
 
 app.get("/", function (req, res) {
     res.send("Library portal");
@@ -83,8 +73,6 @@ app.delete('/deleteBook/:id', (req, res) => {
     books = newBookList;
     res.send(`Id ${bookId} deleted successfully`);
 }) */
-
-
 
 app.listen(8080, () => {
     console.log("Server is listening at port 8080")
